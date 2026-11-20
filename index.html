@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Тест «Атмосфера Земли», 7 класс</title>
+<style>
+:root{
+  --bg:#eef4f9; --card:#ffffff; --ink:#16283c; --muted:#52667a; --line:#c9d8e6;
+  --accent:#2f6aa3; --accent-ink:#ffffff; --ok:#1f7a55; --ok-bg:#e3f4ec; --bad:#a93a2a; --bad-bg:#fbe9e5;
+  --l1:#8cc0e0; --l2:#5b97c6; --l3:#38679a; --l4:#1d3a63;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1a26; --card:#172536; --ink:#e7eef5; --muted:#9db0c3; --line:#2b3f55;
+    --accent:#6fa8dc; --accent-ink:#0f1a26; --ok:#6fd1a4; --ok-bg:#15372b; --bad:#f0907f; --bad-bg:#40201b;
+    --l1:#2c5877; --l2:#2f5f8f; --l3:#3d77b0; --l4:#5d97cf;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1a26; --card:#172536; --ink:#e7eef5; --muted:#9db0c3; --line:#2b3f55;
+  --accent:#6fa8dc; --accent-ink:#0f1a26; --ok:#6fd1a4; --ok-bg:#15372b; --bad:#f0907f; --bad-bg:#40201b;
+  --l1:#2c5877; --l2:#2f5f8f; --l3:#3d77b0; --l4:#5d97cf;
+  color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:20px 16px 40px;display:flex;gap:18px;align-items:stretch}
+h1,h2{font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;font-weight:700;line-height:1.2;margin:0}
+h1{font-size:clamp(28px,6vw,40px)}
+h2{font-size:clamp(21px,4.5vw,26px)}
+.gauge{flex:0 0 74px;position:relative;min-height:440px;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.band{position:absolute;left:0;right:0;display:flex;align-items:center;padding:0 6px;font-size:12px;line-height:1.15;color:#fff;transition:opacity .25s}
+.band span{writing-mode:vertical-rl;transform:rotate(180deg);margin:0 auto}
+.b4{top:0;height:15%;background:var(--l4)}
+.b3{top:15%;height:25%;background:var(--l3)}
+.b2{top:40%;height:30%;background:var(--l2)}
+.b1{top:70%;height:30%;background:var(--l1);color:#0f2a40}
+.band.dim{opacity:.45}
+.pin{position:absolute;left:0;right:0;height:3px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.35);transition:bottom .5s ease}
+.pin::after{content:"";position:absolute;right:-1px;top:-5px;border:6px solid transparent;border-right-color:#fff}
+@media (prefers-reduced-motion:reduce){.pin,.band{transition:none}}
+.main{flex:1;min-width:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 20px}
+.meta{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:15px;margin-bottom:10px}
+.tag{font-weight:600}
+.lead{color:var(--muted);margin:10px 0 18px}
+ul.rules{margin:0 0 20px;padding-left:20px}
+.opts{display:grid;gap:10px;margin:18px 0 0;padding:0;list-style:none}
+.opt{width:100%;text-align:left;font:inherit;color:inherit;background:var(--card);border:2px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;min-height:48px}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg)}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.btn{font:inherit;font-weight:600;background:var(--accent);color:var(--accent-ink);border:0;border-radius:10px;padding:12px 20px;cursor:pointer;min-height:48px}
+.btn.alt{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+.fb{margin-top:16px;padding:12px 14px;border-radius:10px;border-left:5px solid var(--line)}
+.fb.ok{background:var(--ok-bg);border-left-color:var(--ok)}
+.fb.bad{background:var(--bad-bg);border-left-color:var(--bad)}
+.fb strong{display:block;margin-bottom:2px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.score{font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;font-size:clamp(44px,12vw,68px);line-height:1;margin:6px 0 4px}
+.rev{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.rev p{margin:4px 0}
+.small{color:var(--muted);font-size:15px}
+@media (max-width:520px){.wrap{gap:12px;padding-left:12px;padding-right:12px}.gauge{flex-basis:56px}.card{padding:18px 14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="gauge" aria-hidden="true" id="gauge">
+    <div class="band b4" id="b4"><span>термосфера</span></div>
+    <div class="band b3" id="b3"><span>мезосфера</span></div>
+    <div class="band b2" id="b2"><span>стратосфера</span></div>
+    <div class="band b1" id="b1"><span>тропосфера</span></div>
+    <div class="pin" id="pin" style="bottom:0"></div>
+  </div>
+  <main class="main"><div class="card" id="app"></div></main>
+</div>
+<script>
+const QUESTIONS = [
+  {t:'Знание', q:'Из какого газа в основном состоит атмосфера Земли?', o:['Кислород','Азот','Углекислый газ','Аргон'], a:1,
+   e:'Азот составляет около 78 % объёма воздуха, кислород около 21 %. На все остальные газы приходится около 1 %.'},
+  {t:'Знание', q:'Какой порядок слоёв атмосферы верен, если считать от поверхности Земли вверх?', o:['Тропосфера, стратосфера, мезосфера, термосфера','Стратосфера, тропосфера, мезосфера, термосфера','Тропосфера, мезосфера, стратосфера, термосфера','Термосфера, мезосфера, стратосфера, тропосфера'], a:0,
+   e:'От поверхности вверх: тропосфера, стратосфера, мезосфера, термосфера.'},
+  {t:'Знание', q:'В каком слое атмосферы формируются облака, осадки и ветры?', o:['В стратосфере','В тропосфере','В мезосфере','В термосфере'], a:1,
+   e:'Тропосфера самый нижний слой. В ней сосредоточена почти весь водяной пар, поэтому именно здесь образуются облака и формируется погода.'},
+  {t:'Знание', q:'Как меняется температура воздуха в тропосфере с ростом высоты?', o:['Понижается примерно на 6 °C на каждый километр','Повышается примерно на 6 °C на каждый километр','Не меняется','Понижается примерно на 60 °C на каждый километр'], a:0,
+   e:'Воздух в тропосфере нагревается от земной поверхности, поэтому с высотой он холоднее: в среднем на 0,6 °C на каждые 100 м.'},
+  {t:'Знание', q:'В каком слое находится озоновый слой, поглощающий значительную часть ультрафиолетового излучения Солнца?', o:['В тропосфере','В стратосфере','В мезосфере','В термосфере'], a:1,
+   e:'Наибольшая концентрация озона находится в стратосфере, примерно на высоте 20-25 км.'},
+  {t:'Знание', q:'Какова примерная высота верхней границы тропосферы над экватором?', o:['2-3 км','8-10 км','16-18 км','40-50 км'], a:2,
+   e:'Над экватором воздух прогревается сильнее и поднимается выше, поэтому тропосфера достигает 16-18 км. Над полюсами её высота около 8-10 км.'},
+  {t:'Расчёт', q:'У поверхности земли температура воздуха +20 °C. Какой она будет на высоте 3 км в тропосфере, если она падает на 6 °C на каждый километр?', o:['+2 °C','+14 °C','-10 °C','+38 °C'], a:0,
+   e:'3 км × 6 °C = 18 °C. Значит, 20 - 18 = +2 °C.'},
+  {t:'Знание', q:'Чему равно нормальное атмосферное давление на уровне моря?', o:['76 мм рт. ст.','360 мм рт. ст.','760 мм рт. ст.','1760 мм рт. ст.'], a:2,
+   e:'Нормальным считается давление 760 мм рт. ст. (около 1013 гПа). С высотой атмосферное давление уменьшается.'},
+  {t:'Проверь ИИ', q:'ИИ составил справку об атмосфере. Какое утверждение в ней ошибочно?', o:['Тропосфера самый нижний слой атмосферы','Озоновый слой расположен в тропосфере','С высотой атмосферное давление уменьшается','Основной газ атмосферы азот'], a:1,
+   e:'Ошибка во втором утверждении: озоновый слой находится в стратосфере. Такие неточности нужно ловить, сверяя ответ ИИ с учебником.'},
+  {t:'Проверь ИИ', q:'ИИ написал для приложения формулу t = t0 - 6,5 × h и применил её для высот до 80 км. Что здесь неверно?', o:['Формула описывает понижение температуры только в тропосфере, выше температура меняется иначе','Всё верно: температура всегда падает с высотой','Температура с высотой вообще не меняется','Формулу нельзя использовать ни при каких значениях'], a:0,
+   e:'Понижение примерно на 6,5 °C на километр относится к тропосфере (до 8-18 км). В стратосфере температура в целом растёт, в мезосфере снова падает.'}
+];
+
+const app = document.getElementById('app');
+const pin = document.getElementById('pin');
+const bands = [1,2,3,4].map(n => document.getElementById('b' + n));
+let list = [], idx = 0, score = 0, wrong = [], locked = false;
+
+function shuffle(a){ a = a.slice(); for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function esc(s){ return String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+
+function setGauge(p){
+  pin.style.bottom = Math.max(0, Math.min(97, p * 100)) + '%';
+  const layer = p < 0.3 ? 0 : p < 0.6 ? 1 : p < 0.85 ? 2 : 3;
+  bands.forEach((b, i) => b.classList.toggle('dim', i !== layer));
+}
+
+function showStart(){
+  setGauge(0);
+  app.innerHTML =
+    '<h1>Атмосфера Земли</h1>' +
+    '<p class="lead">Тест для 7 класса: 10 вопросов, у каждого один верный ответ. Шкала слева показывает, как вы поднимаетесь по слоям атмосферы.</p>' +
+    '<ul class="rules"><li>После каждого ответа появляется пояснение.</li><li>В двух вопросах нужно найти ошибку, которую допустил ИИ.</li><li>В конце можно разобрать свои ошибки и пройти тест заново.</li></ul>' +
+    '<button class="btn" id="go">Начать тест</button>';
+  document.getElementById('go').onclick = () => start(QUESTIONS);
+}
+
+function start(src){
+  list = shuffle(src); idx = 0; score = 0; wrong = []; render();
+}
+
+function render(){
+  const item = list[idx];
+  locked = false;
+  setGauge(idx / list.length);
+  const opts = shuffle(item.o.map((text, i) => ({text, ok: i === item.a})));
+  app.innerHTML =
+    '<div class="meta"><span class="tag">' + esc(item.t) + '</span><span>Вопрос ' + (idx + 1) + ' из ' + list.length + '</span></div>' +
+    '<h2 id="q" tabindex="-1">' + esc(item.q) + '</h2>' +
+    '<ul class="opts">' + opts.map((o, i) => '<li><button class="opt" data-i="' + i + '">' + esc(o.text) + '</button></li>').join('') + '</ul>' +
+    '<div id="fb" aria-live="polite"></div>';
+  app.querySelectorAll('.opt').forEach(btn => btn.onclick = () => pick(btn, opts, item));
+  document.getElementById('q').focus({preventScroll:true});
+}
+
+function pick(btn, opts, item){
+  if (locked) return;
+  locked = true;
+  const chosen = opts[+btn.dataset.i];
+  app.querySelectorAll('.opt').forEach((b, i) => {
+    b.disabled = true;
+    if (opts[i].ok) b.classList.add('ok');
+  });
+  if (chosen.ok){ score++; } else { btn.classList.add('bad'); wrong.push(item); }
+  const last = idx === list.length - 1;
+  document.getElementById('fb').innerHTML =
+    '<div class="fb ' + (chosen.ok ? 'ok' : 'bad') + '"><strong>' + (chosen.ok ? 'Верно' : 'Неверно') + '</strong>' + esc(item.e) + '</div>' +
+    '<div class="actions"><button class="btn" id="next">' + (last ? 'Показать результат' : 'Следующий вопрос') + '</button></div>';
+  const nb = document.getElementById('next');
+  nb.onclick = () => { idx++; if (idx < list.length) render(); else finish(); };
+  nb.focus();
+}
+
+function finish(){
+  setGauge(1);
+  const n = list.length;
+  const msg = score >= 9 ? 'Отличный результат. Вы уверенно ориентируетесь в теме.'
+    : score >= 7 ? 'Хороший результат. Разберите ошибки, и тема будет усвоена.'
+    : score >= 5 ? 'Неплохо, но тему стоит повторить. Начните с разбора ошибок.'
+    : 'Тему нужно повторить. Разберите ошибки и пройдите тест ещё раз.';
+  app.innerHTML =
+    '<h2>Результат</h2><div class="score">' + score + ' из ' + n + '</div><p class="lead">' + msg + '</p>' +
+    (wrong.length ? '<div class="rev"><h2>Разбор ошибок</h2>' + wrong.map(w =>
+      '<div class="rev"><p><strong>' + esc(w.q) + '</strong></p><p>Верный ответ: ' + esc(w.o[w.a]) + '</p><p class="small">' + esc(w.e) + '</p></div>').join('') + '</div>' : '<p>Ошибок нет.</p>') +
+    '<div class="actions">' +
+    (wrong.length ? '<button class="btn" id="again">Повторить только ошибки</button>' : '') +
+    '<button class="btn alt" id="all">Пройти весь тест заново</button></div>';
+  const again = document.getElementById('again');
+  if (again) again.onclick = () => start(wrong.slice());
+  document.getElementById('all').onclick = () => start(QUESTIONS);
+}
+
+showStart();
+</script>
+</body>
+</html>
